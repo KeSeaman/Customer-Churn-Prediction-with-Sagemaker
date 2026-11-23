@@ -1,6 +1,6 @@
 # Customer Churn Prediction with Amazon SageMaker
 
-A training-and-deployment exercise completed during the AWS course **MLOps Engineering on AWS**. The notebook follows the course lab material (titled *Practical Data Science with Amazon SageMaker* in the notebook) and is shared as a learning record, not as a production system.
+A training-and-deployment exercise from the AWS Training course **Practical Data Science with Amazon SageMaker**. The notebook follows the course lab and is shared as a learning record, not as a production system.
 
 ## What it covers
 
