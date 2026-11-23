@@ -1,10 +1,28 @@
-### Churn prediction problem
-Losing customers is costly for any business. Identifying unhappy customers early gives you a chance to offer them incentives to stay. You will use ML to automate the identification of unhappy customers, also known as customer churn prediction.
-ML models rarely give perfect predictions, so you will learn how to adjust for prediction mistakes in your total ML costs.
-The example of churn that may be familiar to you; leaving a mobile phone service provider for a competitor. If a provider is aware that a particular customer is considering leaving, it can offer timely incentives, perhaps in the form of a phone upgrade, to encourage the customer to continue service.
-Incentives are often more cost-effective than losing and reacquiring a customer.
+# Customer Churn Prediction with Amazon SageMaker
 
-### Dataset
-Mobile phone service providers keep historical records on customers who churn bit ultimately continue using the service. You can use this data to construct an ML model of one mobile phone provider’s churn using a process called training.
-You’ll train the model, can pass the profile information of an arbitrary customer to the model, and have the model predict whether this customer is going to churn. The model will make mistakes—predicting the future is tricky. However, you will learn how to manage prediction errors.
-The dataset used is publicly available and is mentioned in the book Discovering Knowledge in Data by Daniel T. Larose. The author attributed the dataset to the University of California Irvine Repository of Machine Learning Datasets.
+A training-and-deployment exercise completed during the AWS course **MLOps Engineering on AWS**. The notebook follows the course lab material (titled *Practical Data Science with Amazon SageMaker* in the notebook) and is shared as a learning record, not as a production system.
+
+## What it covers
+
+- Exploring a mobile operator's churn data (3,333 customers; UCI dataset cited in Larose, *Discovering Knowledge in Data*).
+- Training XGBoost with SageMaker's built-in algorithm, data staged in S3.
+- Hosting the model on a SageMaker real-time endpoint and evaluating it on a held-out test set.
+- Automatic model tuning: 12 training jobs over `eta` and `min_child_weight`; best validation error 0.063.
+- Choosing the decision threshold by cost rather than accuracy.
+
+## Results (held-out test set, 334 customers)
+
+| Cutoff | Churners caught | False alarms |
+| --- | --- | --- |
+| 0.5 (default) | 37 of 48 | 3 |
+| 0.3 | 41 of 48 | 7 |
+
+With the lab's assumed costs (a missed churner costs 500, an incentive costs 100), total cost is lowest at a cutoff of about 0.37. The point of the exercise: the right threshold depends on what each kind of error costs the business.
+
+## Not included
+
+No pipeline orchestration, Lambda functions, model monitoring or CI. Endpoints were deleted after the exercise.
+
+## Run it
+
+Open `xgboost_customer_churn_bootcamp_AWS.ipynb` in SageMaker Studio or a notebook instance with an execution role that can read and write an S3 bucket. Delete the endpoint afterwards to stop charges.
